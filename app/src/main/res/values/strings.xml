@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">City Vibes</string>
+    <string name="title_activity_compress">CompressActivity</string>
+    <string name="title_activity_upload_gallery">UploadGalleryActivity</string>
+    <string-array name="types_array">
+        <item>All</item>
+        <item>Clubs</item>
+        <item>CafeBars</item>
+        <item>Tsipouradika</item>
+    </string-array>
+    <string name="title_activity_leaderboard">LeaderboardActivity</string>
+    <string name="title_activity_shared">SharedActivity</string>
+    <string name="title_activity_report">ReportActivity</string>
+</resources>

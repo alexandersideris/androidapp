@@ -1,0 +1,141 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DetailSocialFragment"
+    android:background="#ebebe0">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text"
+        android:textColor="#FFF"
+        android:textAlignment="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="These photos were taken by you. Thank you!"
+        android:background="#000"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/big_daddy"
+        android:layout_below="@+id/text">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/parent_layout"
+            android:background="#191919"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:id="@+id/instagram_icon"
+                android:layout_margin="3dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Want to spread the vibes? Just Sign Up with Instagram and upload a photograph. It's easy! Don't worry, we don't post anything on Instagram."
+                android:layout_toRightOf="@+id/instagram_icon"
+                android:textColor="#FFF" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="27dp"
+                android:text="Sign Up"
+                android:onClick="instagramAuthentication"
+                android:layout_below="@+id/textview"
+                android:layout_centerHorizontal="true"
+                android:background="#2ECCFA"
+                android:textColor="#FFF"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="X"
+                android:onClick="closeFragment"
+                android:textColor="#FFF"
+                android:paddingTop="1dp"
+                android:paddingRight="1dp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/parent_layout2"
+            android:background="#191919"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:id="@+id/instagram_icon2"
+                android:layout_margin="3dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/textview2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You are already signed in with Instagram. Just take a photo and let others know what the place is like! Don't worry, we don't post anything on Instagram."
+                android:layout_toRightOf="@+id/instagram_icon2"
+                android:textColor="#FFF" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="27dp"
+                android:text="Take Photo"
+                android:onClick="takePhoto"
+                android:layout_below="@+id/textview2"
+                android:layout_centerHorizontal="true"
+                android:background="#2ECCFA"
+                android:textColor="#FFF"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="X"
+                android:onClick="closeFragment"
+                android:textColor="#FFF"
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_file_textview"
+        android:text="Νo photos have been taken yet."
+        android:textColor="#000"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_below="@+id/big_daddy"
+        android:padding="3dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/social_photo_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/no_file_textview"/>
+
+
+
+</RelativeLayout>

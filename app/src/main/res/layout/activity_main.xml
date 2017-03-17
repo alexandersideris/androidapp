@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.MainActivity"
+    tools:showIn="@layout/activity_main"
+    android:id="@+id/the_real_parent">
+
+    <VideoView
+        android:id="@+id/background_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
+        android:scaleType="centerInside"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="131dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:id="@+id/main_textview"
+        android:textAlignment="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:textColor="#FFF"
+        android:text="Feel the vibes of your city! Photo uploads all day long! For more details visit www.cityvibes.gr" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:textSize="28sp"
+        android:layout_marginTop="102dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="Feel The Vibes"
+        android:fontFamily="verdana"
+        android:textColor="#FFF"
+        android:onClick="feelTheVibes"
+        android:background="@drawable/bg_btn_add_it"
+        android:layout_below="@+id/main_textview"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/sign_in_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign in"
+        android:textColor="#FFF"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="signIn"
+        android:textSize="18sp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="40dp"
+        android:paddingBottom="40dp"/>
+
+    <TextView
+        android:id="@+id/my_profile_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Profile"
+        android:textColor="#FFF"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="myProfile"
+        android:textSize="18sp"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:paddingLeft="40dp"
+        android:paddingBottom="40dp"/>
+
+    <RelativeLayout
+        android:id="@+id/sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:layout_centerInParent="true"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/err"
+            android:textColor="#F00"
+            android:text="Wrong credentials. Try again."
+            android:visibility="invisible"/>
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:id="@+id/username"
+            android:hint="Username"
+            android:textSize="19sp"
+            android:layout_marginBottom="20dp"
+            android:layout_centerHorizontal="true"/>
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:id="@+id/password"
+            android:hint="Password"
+            android:textSize="19sp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/username"
+            android:layout_centerHorizontal="true"
+            android:inputType="textPassword"/>
+
+        <TextView
+            android:id="@+id/asd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+            android:textSize="21sp"
+            android:textColor="#FFF"
+            android:layout_below="@+id/password"
+            android:layout_centerHorizontal="true"
+            android:onClick="authenticate"
+            android:padding="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:onClick="cancelLogin"
+            android:layout_below="@id/asd"
+            android:layout_centerHorizontal="true"
+            android:padding="5dp"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

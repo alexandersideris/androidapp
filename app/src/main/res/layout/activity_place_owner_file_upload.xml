@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_photo_session"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PlaceOwnerUploadOfficialFileActivity"
+    android:background="#ebebe0">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/photo_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/takePhoto"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:onClick="takePhoto"/>
+
+            <TextView
+                android:id="@+id/take_photo_textview"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/takePhoto"
+                android:text="Upload Photo"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="19sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/photo_parent">
+
+            <ImageView
+                android:id="@+id/takeVideo"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:onClick="takeVideo" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/takeVideo"
+                android:text="Upload Video"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="19sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_dad"
+            android:background="#191919"
+            android:layout_below="@+id/photo_parent">
+
+            <Spinner
+                android:id="@+id/music_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="3dp"
+            android:text="Νo photos or videos have been taken yet."
+            android:textColor="#000"
+            android:visibility="gone"
+            android:layout_below="@+id/spinner_dad"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/file_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textview" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

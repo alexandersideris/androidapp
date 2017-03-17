@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.PlaceOwnerActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleTextAppearance="@android:color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax" />
+
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:id="@+id/club_info_photo"
+                    android:layout_margin="10dp"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/club_info_name"
+                    android:text="place name"
+                    android:layout_alignTop="@+id/club_info_photo"
+                    android:layout_toRightOf="@+id/club_info_photo"
+                    android:textColor="#FFF"
+                    android:textSize="28sp"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/club_info_details"
+                    android:text="place details"
+                    android:textColor="#FFF"
+                    android:layout_below="@+id/club_info_name"
+                    android:layout_alignLeft="@+id/club_info_name"
+                    android:textSize="15sp"/>
+
+                <ImageButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/club_info_facebook_icon"
+                    android:layout_marginLeft="5dp"
+                    android:layout_below="@+id/club_info_details"
+                    android:layout_alignLeft="@+id/club_info_details"
+                    android:layout_marginRight="5dp"/>
+
+                <ImageButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/club_info_facebook_icon2"
+                    android:layout_marginLeft="5dp"
+                    android:layout_below="@+id/club_info_details"
+                    android:layout_toRightOf="@+id/club_info_facebook_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/views_today"
+                    android:textColor="#FFF"
+                    android:layout_below="@+id/club_info_photo"
+                    android:textSize="18sp"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/total_views"
+                    android:layout_below="@+id/views_today"
+                    android:textSize="18sp"
+                    android:textColor="#FFF"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="fixed"
+                app:tabGravity="fill"
+                android:layout_gravity="bottom"/>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="io.nextsoftware.cityvibes.activity.ClubOwnerActivity"
+        tools:showIn="@layout/activity_place_owner"
+        android:background="#191919">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#FFF"
+            android:id="@+id/the_textview"
+            android:textAlignment="center"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please select one of the following actions."
+            android:textSize="15sp"
+            android:textColor="#FFF"
+            android:id="@+id/textview"
+            android:textAlignment="center"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_below="@+id/the_textview"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload Files"
+            android:id="@+id/upload_button"
+            android:onClick="uploadFiles"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/textview"
+            android:layout_marginBottom="20dp"
+            android:background="#6495ED"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Leaderboards"
+            android:id="@+id/upload_button2"
+            android:onClick="leaderboards"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@+id/upload_button"
+            android:background="#6495ED"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"/>
+
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log Out"
+            android:onClick="logOut"
+            android:layout_below="@+id/upload_button2"
+            android:layout_centerHorizontal="true"
+            android:background="#FF7F50"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"/>
+
+    </RelativeLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.DetailOfficialFragment"
+    android:background="#ebebe0"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/the_textview"
+        android:textColor="#ebebe0"
+        android:textAlignment="center"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:textSize="15sp"
+        android:background="#000"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview"
+        android:text="Νo photos or videos have been taken yet."
+        android:textColor="#000"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_below="@+id/the_textview"
+        android:padding="3dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vertical_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/the_textview"/>
+
+</RelativeLayout>

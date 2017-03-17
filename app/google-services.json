@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "738476872260",
+    "firebase_url": "https://city-vibes-ddb70.firebaseio.com",
+    "project_id": "city-vibes-ddb70",
+    "storage_bucket": "city-vibes-ddb70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738476872260:android:5be31998b487aa52",
+        "android_client_info": {
+          "package_name": "com.cityvibesgr.cityvibes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738476872260-cvhlu4hi1ns205qsrkgtt5kkeq59390s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvAoB7eRQwATldV8Qpfyf8FNJksPdDFds"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
