@@ -54,7 +54,7 @@ public class ReportActivity extends AppCompatActivity {
 
     public void send(View view) {
         String text = editText.getText().toString();
-        String url = "http://www.cityvibes.gr/android/send_report";
+        String url = "http://www.cityvibes.gr/android/send_report/";
         progressDialog.setTitle("Sending report");
         progressDialog.setMessage("Sending your report, this will only take a few seconds. Thank you for helping City Vibes become better!");
         progressDialog.setCanceledOnTouchOutside(false);

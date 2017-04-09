@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="280dp"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -86,8 +86,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/views_today"
+                    android:paddingTop="10dp"
                     android:textColor="#FFF"
-                    android:layout_below="@+id/club_info_photo"
+                    android:layout_below="@+id/club_info_facebook_icon2"
                     android:textSize="18sp"
                     android:layout_centerHorizontal="true"/>
 
@@ -98,7 +99,7 @@
                     android:layout_below="@+id/views_today"
                     android:textSize="18sp"
                     android:textColor="#FFF"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true" />
 
             </RelativeLayout>
 
@@ -168,17 +169,15 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View Leaderboards"
+            android:text="Edit Details"
             android:id="@+id/upload_button2"
-            android:onClick="leaderboards"
+            android:onClick="editDetails"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
             android:layout_below="@+id/upload_button"
             android:background="#6495ED"
             android:paddingRight="5dp"
             android:paddingLeft="5dp"/>
-
-
 
         <Button
             android:layout_width="match_parent"

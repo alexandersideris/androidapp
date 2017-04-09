@@ -11,8 +11,8 @@ android {
         applicationId "com.cityvibesgr.cityvibes"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.0.4"
+        versionCode 13
+        versionName "1.0.13"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [appPackageName: "${applicationId}"]
         multiDexEnabled true
@@ -53,6 +53,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:palette-v7:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
@@ -81,12 +82,16 @@ dependencies {
     // Video Compressor from GitHub
     compile 'net.ypresto.androidtranscoder:android-transcoder:0.2.0'
 
-    // Google Play Services (Location and Analytics)
+    // Google Play Services (Location)
     compile 'com.google.android.gms:play-services-location:10.2.0'
     compile 'com.google.android.gms:play-services-gcm:10.2.0'
 
+    //FireBase Analytics
     compile 'com.google.firebase:firebase-core:10.2.0'
     compile 'com.google.firebase:firebase-crash:10.2.0'
+
+    //FireBase Notifications
+    compile 'com.google.firebase:firebase-messaging:10.2.0'
 
     // Circle ImageView from GitHub
     compile 'de.hdodenhof:circleimageview:2.1.0'

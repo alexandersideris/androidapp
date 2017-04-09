@@ -117,6 +117,7 @@ public class DetailOfficialFragment extends Fragment {
 
                     }
                 });
+        jsonRequest.setShouldCache(false);
         MySingleton.getInstance(getContext()).addToRequestQueue(jsonRequest);
     }
 

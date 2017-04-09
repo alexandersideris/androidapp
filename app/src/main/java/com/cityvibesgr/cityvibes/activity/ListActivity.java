@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +29,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.cityvibesgr.cityvibes.R;
@@ -48,11 +50,13 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,12 +79,15 @@ public class ListActivity extends AppCompatActivity implements GoogleApiClient.C
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
     private TextView textView;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         initCollapsingToolbar();
+
+        token = FirebaseInstanceId.getInstance().getToken();
 
         clubRecyclerView = (RecyclerView) findViewById(R.id.list);
         textView = (TextView) findViewById(R.id.textview);
@@ -209,10 +216,19 @@ public class ListActivity extends AppCompatActivity implements GoogleApiClient.C
             return;
         }
         if(Keys.INSTAGRAM_USERNAME.equals(Keys.ROOT)){
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+            jsonRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {
+                        public void onResponse(String the_response) {
+                            String str = "";
+                            try {
+                                str = new String(the_response.getBytes("ISO-8859-1"), "UTF-8");
+                            } catch (UnsupportedEncodingException e) {
+
+                                e.printStackTrace();
+                            }
+
+                            String response = Html.fromHtml(str).toString();
                             try {
                                 JSONArray jsonArray = new JSONArray(response);
                                 if(jsonArray.length()==0){
@@ -252,12 +268,20 @@ public class ListActivity extends AppCompatActivity implements GoogleApiClient.C
                     Toast.makeText(context, "Error while getting places. Please try again.", Toast.LENGTH_LONG).show();
                 }
             });
-            MySingleton.getInstance(this).addToRequestQueue(stringRequest);
         }else{
             jsonRequest = new StringRequest
                     (Request.Method.POST, url, new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {
+                        public void onResponse(String the_response) {
+                            String str = "";
+                            try {
+                                str = new String(the_response.getBytes("ISO-8859-1"), "UTF-8");
+                            } catch (UnsupportedEncodingException e) {
+
+                                e.printStackTrace();
+                            }
+
+                            String response = Html.fromHtml(str).toString();
                             try {
                                 JSONArray jsonArray = new JSONArray(response);
                                 if(jsonArray.length()==0){
@@ -304,11 +328,10 @@ public class ListActivity extends AppCompatActivity implements GoogleApiClient.C
                     params.put("latitude", ""+latitude);
                     return params;
                 }
-
             };
-            //jsonRequest.setShouldCache(false);
-            MySingleton.getInstance(this).addToRequestQueue(jsonRequest);
         }
+        jsonRequest.setShouldCache(false);
+        MySingleton.getInstance(this).addToRequestQueue(jsonRequest);
 
 
     }
@@ -341,6 +364,8 @@ public class ListActivity extends AppCompatActivity implements GoogleApiClient.C
         Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if(lastLocation!=null){
             requestPlaces(lastLocation.getLongitude(), lastLocation.getLatitude());
+            /* FireBase notification */
+            registerDevice(lastLocation.getLongitude(), lastLocation.getLatitude());
         }else{
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
@@ -370,7 +395,35 @@ public class ListActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public void onLocationChanged(Location location) {
         requestPlaces(location.getLongitude(), location.getLatitude());
+        registerDevice(location.getLongitude(), location.getLatitude());
         mGoogleApiClient.disconnect();
+    }
+
+    private void registerDevice(double longitude, double latitude) {
+        String url = "http://www.cityvibes.gr/android/register_device";
+        StringRequest jsonRequest = new StringRequest
+                (Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("reg_id", token);
+                params.put("longitude", ""+longitude);
+                params.put("latitude", ""+latitude);
+                return params;
+            }
+
+        };
+        MySingleton.getInstance(this).addToRequestQueue(jsonRequest);
     }
 
     @Override
@@ -394,9 +447,9 @@ public class ListActivity extends AppCompatActivity implements GoogleApiClient.C
                 textView.setVisibility(View.GONE);
             }
             clubRecyclerView.swapAdapter(placeAdapter, false);
-        }else if(parent.getItemAtPosition(pos).toString().equals("Clubs")){
+        }else if(parent.getItemAtPosition(pos).toString().equals("Clubs/Bars")){
             if(clubs.size()==0){
-                textView.setText("There are no registered clubs in your area.");
+                textView.setText("There are no registered clubs/bars in your area.");
                 textView.setVisibility(View.VISIBLE);
             }else{
                 textView.setVisibility(View.GONE);

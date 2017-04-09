@@ -174,7 +174,7 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
                             if(place.getType().equals("Club")){
                                 detailsTextView.setText("Location: " + place.getLocation() + ", " + place.getCity() + "\nDrink Price: " + place.getDrinkPrice() + " €\nBottle Price: " + place.getBottlePrice() + " €");
                             }else if(place.getType().equals("CafeBar")){
-                                detailsTextView.setText("Location: " + place.getLocation() + ", " + place.getCity() + "\nCoffee(Esspresso): " + place.getCoffeePrice() + " €\nDrink Price: " + place.getDrinkPrice() + " €");
+                                detailsTextView.setText("Location: " + place.getLocation() + ", " + place.getCity() + "\nFreddo Espresso: " + place.getCoffeePrice() + " €\nDrink Price: " + place.getDrinkPrice() + " €");
                             }else if(place.getType().equals("Tsipouradiko")){
                                 detailsTextView.setText("Location: " + place.getLocation() + ", " + place.getCity() + "\nΡετσίνα: " + place.getRetsinaPrice() + " €\nΚρασί Χύμα(λίτρο): " + place.getWinePrice() + " €");
                             }
@@ -189,11 +189,18 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
 
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent();
-                                    intent.setAction(Intent.ACTION_VIEW);
-                                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                                    intent.setData(Uri.parse(place.getFacebookAccountLink()));
-                                    startActivity(intent);
+                                    try {
+                                        context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+                                        Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href="+place.getFacebookAccountLink()));
+                                        startActivity(intent);
+                                    } catch (Exception e) {
+                                        Intent intent = new Intent();
+                                        intent.setAction(Intent.ACTION_VIEW);
+                                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                                        intent.setData(Uri.parse(place.getFacebookAccountLink()));
+                                        startActivity(intent);
+                                    }
+
 
                                 }
 
@@ -224,7 +231,7 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     private void addView(int placeID) {
-        String url = "http://www.cityvibes.gr/android/add_view/"+placeID;
+        String url = "http://www.cityvibes.gr/android/add_view/"+placeID+"/";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -237,6 +244,7 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
                 //Toast.makeText(context, "Error in getting next upload time bro..", Toast.LENGTH_LONG).show();
             }
         });
+        stringRequest.setShouldCache(false);
         MySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
@@ -259,8 +267,7 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     public void canTakePhoto(double longitude, double latitude){
-        String url = "http://www.cityvibes.gr/android/can_take_photo/"+thePlaceID;
-
+        String url = "http://www.cityvibes.gr/android/can_take_photo/"+thePlaceID+"/";
         StringRequest jsonRequest = new StringRequest
                 (Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
@@ -313,7 +320,7 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
                     takePictureIntent.setClipData(clip);
                     takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
-
+                //Toast.makeText(context, "Βεβαιωθείτε ότι η φωτογραφία δείχνει τι γίνεται αυτήν την στιγμή στο μαγαζί.", Toast.LENGTH_LONG).show();
                 ((Activity) context).startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         }
@@ -324,17 +331,13 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
         /* REQUEST_IMAGE_CAPTURE */
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                uploadFile();
-            }else{
-                Intent imageEditorIntent = new AdobeImageIntent.Builder(context)
-                        .setData(fileForUpload.getUri()) // input image source
-                        .withOutputFormat(Bitmap.CompressFormat.JPEG) // output format
-                        .withOutputSize(MegaPixels.Mp2) // output size
-                        .withOutput(fileForUpload.getFile())
-                        .build();
-                startActivityForResult(imageEditorIntent, REQUEST_CREATIVE_SDK);
-            }
+            Intent imageEditorIntent = new AdobeImageIntent.Builder(context)
+                    .setData(fileForUpload.getUri()) // input image source
+                    .withOutputFormat(Bitmap.CompressFormat.JPEG) // output format
+                    .withOutputSize(MegaPixels.Mp2) // output size
+                    .withOutput(fileForUpload.getFile())
+                    .build();
+            startActivityForResult(imageEditorIntent, REQUEST_CREATIVE_SDK);
 
         }
 
@@ -409,7 +412,13 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
                     new String[]{Manifest.permission.CAMERA},
                     MY_PERMISSIONS_REQUEST_CAMERA);
         }else{
-            takePhoto();
+
+            progressDialog.setTitle("Checking location");
+            progressDialog.setMessage("Checking your location, this will only take a few seconds.");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            mGoogleApiClient.connect();
         }
     }
 
@@ -420,7 +429,12 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //permission granted
-                takePhoto();
+                progressDialog.setTitle("Checking location");
+                progressDialog.setMessage("Checking your location, this will only take a few seconds.");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                mGoogleApiClient.connect();
             }
         }
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
@@ -526,8 +540,8 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
 
     @Override
     public void onLocationChanged(Location location) {
-        mGoogleApiClient.disconnect();
         canTakePhoto(location.getLongitude(), location.getLatitude());
+        mGoogleApiClient.disconnect();
     }
 
     private void setupViewPager(ViewPager viewPager) {

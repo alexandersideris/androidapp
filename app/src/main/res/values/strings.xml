@@ -4,7 +4,7 @@
     <string name="title_activity_upload_gallery">UploadGalleryActivity</string>
     <string-array name="types_array">
         <item>All</item>
-        <item>Clubs</item>
+        <item>Clubs/Bars</item>
         <item>CafeBars</item>
         <item>Tsipouradika</item>
     </string-array>

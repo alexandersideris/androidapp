@@ -259,7 +259,7 @@ public class PlaceOwnerUploadOfficialFileActivity extends AppCompatActivity impl
                     takePictureIntent.setClipData(clip);
                     takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
-
+                Toast.makeText(context, "Βεβαιωθείτε ότι η φωτογραφία δείχνει τι γίνεται αυτήν την στιγμή στο μαγαζί σας.", Toast.LENGTH_LONG).show();
                 ((Activity) context).startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         }
@@ -270,6 +270,7 @@ public class PlaceOwnerUploadOfficialFileActivity extends AppCompatActivity impl
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
             intent.putExtra("android.intent.extra.durationLimit", 10);
+            Toast.makeText(context, "Βεβαιωθείτε ότι το βίντεο δείχνει τι γίνεται αυτήν την στιγμή στο μαγαζί σας.", Toast.LENGTH_LONG).show();
             ((Activity) context).startActivityForResult(intent, REQUEST_VIDEO_CAPTURE);
         } else {
             Toast.makeText(context, "You need an android device running 4.3 or higher to upload videos to the platform.", Toast.LENGTH_LONG).show();
@@ -320,17 +321,13 @@ public class PlaceOwnerUploadOfficialFileActivity extends AppCompatActivity impl
         /* REQUEST_IMAGE_CAPTURE */
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                uploadFile();
-            } else {
-                Intent imageEditorIntent = new AdobeImageIntent.Builder(context)
-                        .setData(fileForUpload.getUri()) // input image source
-                        .withOutputFormat(Bitmap.CompressFormat.JPEG) // output format
-                        .withOutputSize(MegaPixels.Mp2) // output size
-                        .withOutput(fileForUpload.getFile())
-                        .build();
-                startActivityForResult(imageEditorIntent, REQUEST_CREATIVE_SDK);
-            }
+            Intent imageEditorIntent = new AdobeImageIntent.Builder(context)
+                    .setData(fileForUpload.getUri()) // input image source
+                    .withOutputFormat(Bitmap.CompressFormat.JPEG) // output format
+                    .withOutputSize(MegaPixels.Mp2) // output size
+                    .withOutput(fileForUpload.getFile())
+                    .build();
+            startActivityForResult(imageEditorIntent, REQUEST_CREATIVE_SDK);
 
         }
 

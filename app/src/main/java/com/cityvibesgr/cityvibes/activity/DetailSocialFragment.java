@@ -125,6 +125,7 @@ public class DetailSocialFragment extends Fragment {
 
                     }
                 });
+        jsonRequest.setShouldCache(false);
         MySingleton.getInstance(getContext()).addToRequestQueue(jsonRequest);
     }
 

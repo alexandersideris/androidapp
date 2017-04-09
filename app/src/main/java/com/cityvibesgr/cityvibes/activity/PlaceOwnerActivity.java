@@ -1,5 +1,6 @@
 package com.cityvibesgr.cityvibes.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -35,6 +36,7 @@ public class PlaceOwnerActivity extends AppCompatActivity {
     SharedPreferences preferences;
     int placeID=-1;
     String placeType = "";
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,7 @@ public class PlaceOwnerActivity extends AppCompatActivity {
                             if(placeType.equals("Club")){
                                 detailsTextView.setText("Location: " + placeLocation + ", " + placeCity + "\nDrink Price: " + drinkPrice + " €\nBottle Price: " + bottlePrice + " €");
                             }else if(placeType.equals("CafeBar")){
-                                detailsTextView.setText("Location: " + placeLocation + ", " + placeCity + "\nCoffee(Esspreso): " + coffeePrice + " €\nDrink Price: " + drinkPrice + " €");
+                                detailsTextView.setText("Location: " + placeLocation + ", " + placeCity + "\nFreddo Espresso: " + coffeePrice + " €\nDrink Price: " + drinkPrice + " €");
                             }else if(placeType.equals("Tsipouradiko")){
                                 detailsTextView.setText("Location: " + placeLocation + ", " + placeCity + "\nΡετσίνα: " + retsinaPrice + " €\nΚρασί Χύμα(λίτρο): " + winePrice + " €");
                             }
@@ -114,11 +116,17 @@ public class PlaceOwnerActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent();
-                                    intent.setAction(Intent.ACTION_VIEW);
-                                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                                    intent.setData(Uri.parse(clubFacebookUrl));
-                                    startActivity(intent);
+                                    try {
+                                        context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+                                        Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href="+clubFacebookUrl));
+                                        startActivity(intent);
+                                    } catch (Exception e) {
+                                        Intent intent = new Intent();
+                                        intent.setAction(Intent.ACTION_VIEW);
+                                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                                        intent.setData(Uri.parse(clubFacebookUrl));
+                                        startActivity(intent);
+                                    }
                                 }
 
                             });
@@ -161,6 +169,15 @@ public class PlaceOwnerActivity extends AppCompatActivity {
     public void leaderboards(View v){
         Intent intent = new Intent(this, LeaderboardActivity.class);
         intent.putExtra("place_id", placeID);
+        startActivity(intent);
+    }
+
+    public void editDetails(View v){
+        //Toast.makeText(this, "Log in to www.cityvibes.gr and edit your details.", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(Uri.parse("http://www.cityvibes.gr/accounts/login/"));
         startActivity(intent);
     }
 

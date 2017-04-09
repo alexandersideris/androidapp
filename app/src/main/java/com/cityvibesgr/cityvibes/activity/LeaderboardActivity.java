@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class LeaderboardActivity extends AppCompatActivity {
@@ -60,7 +62,16 @@ public class LeaderboardActivity extends AppCompatActivity {
         jsonRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String the_response) {
+                        String str = "";
+                        try {
+                            str = new String(the_response.getBytes("ISO-8859-1"), "UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+
+                            e.printStackTrace();
+                        }
+
+                        String response = Html.fromHtml(str).toString();
                         try {
                             JSONArray jsonArray = new JSONArray(response);
                             if(jsonArray.length()==0){
