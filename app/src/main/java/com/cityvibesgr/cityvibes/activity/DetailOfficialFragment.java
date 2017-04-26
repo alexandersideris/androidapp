@@ -39,7 +39,7 @@ public class DetailOfficialFragment extends Fragment {
     TextView textView1;
 
     public DetailOfficialFragment() {
-
+        //one comment
     }
 
     @Override
