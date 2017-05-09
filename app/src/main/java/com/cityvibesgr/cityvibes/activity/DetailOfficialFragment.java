@@ -36,7 +36,7 @@ public class DetailOfficialFragment extends Fragment {
     private RecyclerView myRecyclerView;
     private ArrayList<String> photosessionDetails = new ArrayList<String>();
     private View v;
-    TextView textView1;
+    TextView textView1, textView2;
 
     public DetailOfficialFragment() {
         //one comment
@@ -59,6 +59,7 @@ public class DetailOfficialFragment extends Fragment {
         textView.setText("These photos were taken by the Official Team of " + placeName + ".");
 
         textView1 = (TextView) v.findViewById(R.id.textview);
+        textView2 = (TextView) v.findViewById(R.id.textview2);
 
         getPlaceFiles(placeID, placeName, placeType);
         return v;
@@ -73,6 +74,7 @@ public class DetailOfficialFragment extends Fragment {
                     public void onResponse(JSONArray response) {
                         if(response.length()==0){
                             textView1.setVisibility(View.VISIBLE);
+                            textView2.setVisibility(View.VISIBLE);
                         }
                         for (int i = 0; i < response.length(); i++) {
                             try {

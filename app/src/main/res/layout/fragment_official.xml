@@ -27,7 +27,17 @@
         android:layout_centerHorizontal="true"
         android:visibility="gone"
         android:layout_below="@+id/the_textview"
-        android:padding="3dp"/>
+        android:padding="3dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview2"
+        android:text="Swipe left to view Social photos."
+        android:textColor="#000"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_below="@+id/textview" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/vertical_list"
